@@ -149,3 +149,19 @@ deploy:
 deploy:
   skip_cleanup: true
 ```
+
+
+###Одновременная заргрузка в различные хранилища
+Travis CI позволяет одновременно загружать артифакты сборки в различные центральные репозитории (хранилища).
+Чтобы воспользоваться данным способом, необходимо в фазе deploy прописать следующее:
+```html
+deploy:
+  - provider: cloudcontrol //Указываем хранилище cloudControl 
+    email: "YOUR CLOUDCONTROL EMAIL"
+    password: "YOUR CLOUDCONTROL PASSWORD"
+    deployment: "APP_NAME/DEP_NAME"
+  - provider: heroku //Указываем хранилище Heroku
+    api_key: "YOUR HEROKU API KEY"
+``` 
+
+###До
