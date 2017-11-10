@@ -111,3 +111,30 @@ Travis CI предоставляет перечень провайдеров, к
     Surge.sh
     TestFairy
   
+Чтобы загрузить артифакты в другое хранилище, которое не представлено списком выше (либо произвести загрузку на свой сервер), 
+необходимо использовать script, либо фазу after_success.
+
+```html
+env:
+  global:
+    - "FTP_USER=user"
+    - "FTP_PASSWORD=password"
+after_success:
+    "curl --ftp-create-dirs -T uploadfilename -u $FTP_USER:$FTP_PASSWORD ftp://sitename.com/directory/myfile"
+```
+```html
+after_success:
+  - eval "$(ssh-agent -s)" #start the ssh agent
+  - chmod 600 .travis/deploy_key.pem # this key should have push access
+  - ssh-add .travis/deploy_key.pem
+  - git remote add deploy DEPLOY_REPO_URI_GOES_HERE
+  - git push deploy
+```
+
+```html
+deploy:
+  provider: script
+  script: scripts/deploy.sh
+  on:
+    branch: develop
+```
