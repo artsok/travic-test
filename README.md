@@ -131,6 +131,7 @@ after_success:
   - git push deploy
 ```
 
+Если для загрузки артифактов/развертывания требуется больше настроек, чем позволяет фаза after_success, используйте собственный скрипт.
 ```html
 deploy:
   provider: script
