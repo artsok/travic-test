@@ -164,4 +164,22 @@ deploy:
     api_key: "YOUR HEROKU API KEY"
 ``` 
 
-###До
+###Дополнительные условия с оператором on:
+Загрука может контролироваться с помощью условия 'on' для каждого хранилища.
+Когда все условия, указанные в разделе 'on', будут выполнены, тогда произойдет загрузка артефактов.
+
+```html
+deploy:
+  provider: s3
+  access_key_id: "YOUR AWS ACCESS KEY"
+  secret_access_key: "YOUR AWS SECRET KEY"
+  bucket: "S3 Bucket"
+  skip_cleanup: true //Пропустить очистку
+  on: //Условие
+    branch: release
+    condition: $MY_ENV = super_awesome
+``` 
+
+
+
+
