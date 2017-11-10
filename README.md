@@ -41,7 +41,9 @@ cache:
 Кэш хранится 30 дней при условии что сборка запускается на travis-ci.org 
  
 ```
-###Собственные скрипты 
+
+###Собственные скрипты
+
 Если у вас есть собственные скрипты в которых прописана сложная логика, то вы можете вызвать их
 из файла .travis.yml
 Рассмотрим пример сборки проекта с отдельными скриптами (Это только для сборок, а не для PR/MR)
@@ -64,3 +66,48 @@ fi
 ```html
 script: ./scripts/run-tests.sh
 ```
+
+###Deployment
+Travis CI предоставляет перечень провайдеров, которые позволяет загружать артифакты в определенный сервис.
+Список сервисов:
+
+    anynines
+    Appfog
+    Atlas
+    AWS CodeDeploy
+    AWS Elastic Beanstalk
+    AWS Lambda
+    AWS OpsWorks
+    AWS S3
+    Azure Web Apps
+    bintray
+    BitBalloon
+    Bluemix CloudFoundry
+    Boxfuse
+    Catalyze
+    Chef Supermarket
+    Cloud 66
+    CloudFoundry
+    Deis
+    Engine Yard
+    GitHub Pages
+    GitHub Releases
+    Google App Engine
+    Google Cloud Storage
+    Google Firebase
+    Hackage
+    Heroku
+    Launchpad
+    Modulus
+    npm
+    OpenShift
+    packagecloud.io
+    Puppet Forge
+    PyPI
+    Rackspace Cloud Files
+    RubyGems
+    Scalingo
+    Script
+    Surge.sh
+    TestFairy
+  
