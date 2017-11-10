@@ -187,5 +187,56 @@ deploy:
 3. jdk, node, perl, php, python, ruby, scala, go: Можно указать определенную версию, на которой будет выполняться загрузка артефактов
 4. condition: Можно указывать bash условия. Выражение должно быть строковым литералом. if [[ <condition> ]]; then <deploy>; fi
 Выражение может быть составляющим, но оно должно быть только одно. К примеру '$CC = gcc'
-5. tags: 
+5. tags: Когда данный параметр выставлен в true, артефакты приложения будут загружены если в комиите был установлен
+tag. Данное условие приводит к игнорированию условия branch 
 
+Ниже пример демонстрирует загрузку артефактов в хранилище Appfrog, только с ветки staging, при условии,
+что тесты будут запущены на node.js версии 0.11
+
+```html
+deploy:
+  provider: appfog
+  user: ...
+  api_key: ...
+  on:
+    branch: staging
+    node: '0.11' # this should be quoted; otherwise, 0.10 would not work
+```
+
+Далее пример, демонстрирует загрузку артефактов в хранилизе S3, при условии, что переменная $CC установлена в
+gcc.
+```html
+deploy:
+  provider: s3
+  access_key_id: "YOUR AWS ACCESS KEY"
+  secret_access_key: "YOUR AWS SECRET KEY"
+  skip_cleanup: true
+  bucket: "S3 Bucket"
+  on:
+    condition: "$CC = gcc"
+```
+
+Далее пример демонстрирует загрузку артифактов на GitHub при включенном tag и версия Ruby 2.0.0
+```html
+deploy:
+  provider: releases
+  api_key: "GITHUB OAUTH TOKEN"
+  file: "FILE TO UPLOAD"
+  skip_cleanup: true
+  on:
+    tags: true
+    rvm: 2.0.0
+```
+
+Если вы не нашли в списке работы с нужным хранилищем, вы может запросить службу поддержки (support@travis-ci.com)
+добавить хранилище.
+Так же можно и самому поэксперементировать (https://github.com/travis-ci/dpl) с созданием механизма загрузки в нужное хранилище,
+для этого необхоимо указать параметр edge
+```html
+deploy:
+  provider: awesome-experimental-provider
+  edge: true
+```
+
+Запомните, что сборки с PullRequests пропускают фазу deployment.  
+ 
