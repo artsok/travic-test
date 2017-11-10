@@ -239,4 +239,30 @@ deploy:
 ```
 
 Запомните, что сборки с PullRequests пропускают фазу deployment.  
- 
+
+
+Загрузка артефактов с помощью фазы after-success, в которой прописываем нужные действия
+```html
+env:
+  global:
+    - "FTP_USER=user"
+    - "FTP_PASSWORD=password"
+after_success:
+    "curl --ftp-create-dirs -T uploadfilename -u $FTP_USER:$FTP_PASSWORD ftp://sitename.com/directory/myfile" //Загрузка файла на ftp сервер
+``` 
+
+Пользователь и пароль, могут быть зашифрованы. 
+```html
+gem install travis
+travis encrypt SOMEVAR="secretvalue"
+```
+
+Так же ниже пример загрузки артифактов на сервис через git
+```html
+after_success:
+  - eval "$(ssh-agent -s)" #start the ssh agent
+  - chmod 600 .travis/deploy_key.pem # this key should have push access
+  - ssh-add .travis/deploy_key.pem
+  - git remote add deploy DEPLOY_REPO_URI_GOES_HERE
+  - git push deploy
+```
