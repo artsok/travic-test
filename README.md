@@ -279,3 +279,28 @@ deploy:
     branch: develop
 ```
 Если скрипт вернет ненулевой статус, deploy будет неудачным, а сборка (build) будет помечена, как ошибка "error".
+
+##### Передача аргументов в пользовательский скрипт
+```html
+eploy:
+  # deploy develop to the staging environment
+  - provider: script
+    script: scripts/deploy.sh staging //Передаем аргумент staging 
+    on:
+      branch: develop
+  # deploy master to production
+  - provider: script
+    script: scripts/deploy.sh production //Передаем аргумент production
+    on:
+      branch: master
+``` 
+
+Так же в скрипт можно передавать переменным среды (environment variables).
+```html
+deploy:
+  provider: script
+  script: scripts/deploy.sh production $TRAVIS_TAG //Передача переменной
+  on:
+    tags: true
+    all_branches: true
+```
