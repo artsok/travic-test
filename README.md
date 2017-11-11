@@ -241,7 +241,7 @@ deploy:
 Запомните, что сборки с PullRequests пропускают фазу deployment.  
 
 
-Загрузка артефактов с помощью фазы after-success, в которой прописываем нужные действия
+#####Загрузка артефактов с помощью фазы after-success, в которой прописываем нужные действия
 ```html
 env:
   global:
@@ -266,3 +266,16 @@ after_success:
   - git remote add deploy DEPLOY_REPO_URI_GOES_HERE
   - git push deploy
 ```
+
+#####Загрузка артефактов с помощью script deployment
+Для более гибкой настройки загрузки артифактов, вы можете использовать свои скрипты. Следующий пример запускает скрипт
+распаложенный scripts/deploy.sh для ветки branch при условии успешной сборки.
+
+```html
+deploy:
+  provider: script
+  script: scripts/deploy.sh
+  on:
+    branch: develop
+```
+
