@@ -10,7 +10,7 @@ addons:
   firefox: latest
   apt:
     packages:
-       - google-chrome-stable
+       - google-chrome-stable
 
 before_script:
   - "echo google-chrome --version"
