@@ -10,11 +10,13 @@ import io.github.artsok.travis.pages.FilterPage;
 import io.github.artsok.travis.pages.LandingPage;
 import io.github.artsok.travis.pages.ProductPage;
 import io.github.artsok.travis.pages.YandexMarketPage;
-import io.github.bonigarcia.wdm.WebDriverManager;
+import io.github.bonigarcia.wdm.ChromeDriverManager;
 import org.junit.Assert;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import ru.yandex.qatools.allure.annotations.Attachment;
 
 import java.util.List;
@@ -32,11 +34,12 @@ public class StepDefinitions {
 
     @Before//(value = "@All")
     public void setUp() throws IllegalAccessException, InstantiationException {
-        System.out.println("Инициализация");
-        Class<? extends WebDriver> driverClass = ChromeDriver.class;
-        WebDriverManager.getInstance(driverClass).setup();
-        driver = driverClass.newInstance();
-
+        ChromeDriverManager.getInstance().setup();
+        DesiredCapabilities cap = DesiredCapabilities.chrome();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--start-maximized");
+        cap.setCapability(ChromeOptions.CAPABILITY, options);
+        driver = new ChromeDriver(cap);
     }
 
 
