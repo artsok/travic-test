@@ -39,7 +39,7 @@ public class StepDefinitions {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--start-maximized");
         cap.setCapability(ChromeOptions.CAPABILITY, options);
-        driver = new ChromeDriver(cap);
+        driver = new ChromeDriver();
     }
 
 
@@ -48,13 +48,13 @@ public class StepDefinitions {
         if (driver != null) {
             driver.quit();
         }
-        System.out.println("Выход ");
     }
 
 
     @Given("^I open the browser and expand to full screen$")
     public void iOpenTheFirefoxBrowserAndExpandToFullScreen() {
-        driver.manage().window().maximize();
+        System.out.println("height " + driver.manage().window().getSize().height);
+        System.out.println("width " + driver.manage().window().getSize().width);
     }
 
     @And("^I open yandex\\.ru$")
