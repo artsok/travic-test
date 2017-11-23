@@ -10,7 +10,9 @@ import io.github.artsok.travis.pages.FilterPage;
 import io.github.artsok.travis.pages.LandingPage;
 import io.github.artsok.travis.pages.ProductPage;
 import io.github.artsok.travis.pages.YandexMarketPage;
+import io.github.artsok.travis.utils.VideoRecorder;
 import io.github.bonigarcia.wdm.ChromeDriverManager;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -19,9 +21,14 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import ru.yandex.qatools.allure.annotations.Attachment;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.stream.Stream;
 
-
+@Slf4j
 public class StepDefinitions {
 
     private LandingPage landingPage;
@@ -30,10 +37,20 @@ public class StepDefinitions {
     private ProductPage productPage;
     private String exceptionMessage;
     private WebDriver driver;
+    private VideoRecorder vr;
 
 
     @Before//(value = "@All")
-    public void setUp() throws IllegalAccessException, InstantiationException {
+    public void setUp() throws IllegalAccessException, InstantiationException, IOException {
+        Files.createDirectories(Paths.get("./video"));
+        vr = new VideoRecorder("./video");
+        vr.startRecording();
+
+        Stream<Path> paths = Files.find(Paths.get("."), 10, (path, basicFileAttributes) -> path.startsWith("video"));
+
+        log.info(" WTFFFF + " + paths.toString());
+
+
         ChromeDriverManager.getInstance().setup();
         DesiredCapabilities cap = DesiredCapabilities.chrome();
         ChromeOptions options = new ChromeOptions();
@@ -48,6 +65,7 @@ public class StepDefinitions {
         if (driver != null) {
             driver.quit();
         }
+        vr.stopRecording();
     }
 
 
