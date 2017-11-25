@@ -21,16 +21,17 @@ before_script:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
   - sleep 3 # give xvfb some time to start
-  - whereis mail
 
 script:
     - mvn clean test
 #    - mvn clean test site jetty:run
 
+after_script:
+  - echo "Try Try" | mail -s "Travic Send" relix@mail.ru
 
 notifications:
   email:
     recipients:
         - relix@mail.ru
-    on_success: always
-    on_failure: never
+    on_success: never
+    on_failure: always
