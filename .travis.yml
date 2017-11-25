@@ -28,6 +28,6 @@ script:
 
 notifications:
   email:
-   recipients:
+    recipients:
         - AVSokovets.SBT@sberbank.ru
     on_success: always
