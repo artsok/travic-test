@@ -23,3 +23,11 @@ jdk:
 
 script:
     - mvn clean test
+
+#after_success:
+
+notifications:
+  email:
+   recipients:
+        - AVSokovets.SBT@sberbank.ru
+    on_success: always

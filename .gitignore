@@ -1,1 +1,8 @@
-# Created by .ignore support plugin (hsz.mobi)
+# Intellij stuff #
+##################
+*.iml
+*.ipr
+*.iws
+.idea/
+
+target/
