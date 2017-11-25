@@ -42,13 +42,12 @@ public class StepDefinitions {
 
     @Before//(value = "@All")
     public void setUp() throws IllegalAccessException, InstantiationException, IOException {
-        Files.createDirectories(Paths.get("./video"));
-        vr = new VideoRecorder("./video");
+        Files.createDirectories(Paths.get("video"));
+        vr = new VideoRecorder("video");
         vr.startRecording();
 
         Stream<Path> paths = Files.find(Paths.get("."), 10, (path, basicFileAttributes) -> path.startsWith("video"));
-
-        log.info(" WTFFFF + " + paths.toString());
+        paths.peek(path -> log.info("Папочка " + path.toString()));
 
 
         ChromeDriverManager.getInstance().setup();
