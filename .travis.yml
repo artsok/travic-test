@@ -14,20 +14,28 @@ addons:
   apt:
     packages:
        - google-chrome-stable
-       - mailutils
+
+before_install:
+  - sudo apt-get -y update
+  - debconf-set-selections <<< "postfix postfix/mailname string artem@sokovets.ru"
+  - debconf-set-selections <<< "postfix postfix/main_mailer_type string 'Internet Site'"
+  - apt-get -y update
+  - apt-get install -y mailutils
+  - apt-get install -y ssmtp
+  - echo -e "FromLineOverride=YES \nAuthUser=$email \nAuthPass=$password \nmailhub=smtp.timeweb.ru:25 \nUseSTARTTLS=YES" >> /etc/ssmtp/ssmtp.conf
 
 before_script:
   - google-chrome --version #Show Chrome Versions
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
   - sleep 3 # give xvfb some time to start
-
+  - echo
 script:
     - mvn clean test
 #    - mvn clean test site jetty:run
 
 after_script:
-  - echo "Try Try" | mail -s "Travic Send" relix@mail.ru
+  - echo "This is a test" | mail --debug-level 10 -s "Tesasdasdsad" -aFrom:$email $email2
 
 notifications:
   email:
