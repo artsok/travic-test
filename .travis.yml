@@ -24,6 +24,7 @@ before_install:
   - sudo apt-get install -y ssmtp
   - sudo echo -e "FromLineOverride=YES \nAuthUser=$email \nAuthPass=$password \nmailhub=smtp.timeweb.ru:25 \nUseSTARTTLS=YES" >> /etc/ssmtp/ssmtp.conf
   - sudo sleep 3
+  - sudo cat /etc/ssmtp/ssmtp.conf
   - sudo echo "This is a test" | mail --debug-level 10 -s "Tesasdasdsad" -aFrom:$email $email2
 
 before_script:
