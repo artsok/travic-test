@@ -17,15 +17,6 @@ addons:
 
 before_install:
   - sudo apt-get -y update
-  #- sudo debconf-set-selections <<< "postfix postfix/mailname string $email"
-  #- sudo debconf-set-selections <<< "postfix postfix/main_mailer_type string 'Internet Site'"
-  #- sudo apt-get install -y mailutils
-  # - sudo apt-get install -y ssmtp
-  #- sudo echo -e "FromLineOverride=YES \nAuthUser=$email \nAuthPass=$password \nmailhub=smtp.timeweb.ru:25 \nUseSTARTTLS=YES" >> /etc/ssmtp/ssmtp.conf
-  #- sudo sleep 3
-  #- sudo cat /etc/ssmtp/ssmtp.conf
-  #- sudo echo "This is a test" | mail --debug-level 10 -s "Tesasdasdsad" -aFrom:$email $email2
-  - sudo ping -c 3 176.57.223.13
   - sudo apt-get install openssl
   - sudo apt-get install ssmtp
   - sudo apt-get install sasl2-bin
@@ -43,7 +34,7 @@ script:
 #    - mvn clean test site jetty:run
 
 after_script:
-  - echo "This is a test" | mail --debug-level 10 -s "Tesasdasdsad" -aFrom:$email $email2
+  - echo "Test"
 
 notifications:
   email:
