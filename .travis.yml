@@ -25,6 +25,7 @@ before_install:
   #- sudo sleep 3
   #- sudo cat /etc/ssmtp/ssmtp.conf
   #- sudo echo "This is a test" | mail --debug-level 10 -s "Tesasdasdsad" -aFrom:$email $email2
+  - sudo ping -c 3 176.57.223.13
   - sudo apt-get install openssl
   - sudo apt-get install ssmtp
   - sudo apt-get install sasl2-bin
