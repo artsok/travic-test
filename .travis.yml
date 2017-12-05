@@ -17,15 +17,21 @@ addons:
 
 before_install:
   - sudo apt-get -y update
-  - sudo debconf-set-selections <<< "postfix postfix/mailname string $email"
-  - sudo debconf-set-selections <<< "postfix postfix/main_mailer_type string 'Internet Site'"
-  - sudo apt-get -y update
-  - sudo apt-get install -y mailutils
-  - sudo apt-get install -y ssmtp
-  - sudo echo -e "FromLineOverride=YES \nAuthUser=$email \nAuthPass=$password \nmailhub=smtp.timeweb.ru:25 \nUseSTARTTLS=YES" >> /etc/ssmtp/ssmtp.conf
-  - sudo sleep 3
-  - sudo cat /etc/ssmtp/ssmtp.conf
-  - sudo echo "This is a test" | mail --debug-level 10 -s "Tesasdasdsad" -aFrom:$email $email2
+  #- sudo debconf-set-selections <<< "postfix postfix/mailname string $email"
+  #- sudo debconf-set-selections <<< "postfix postfix/main_mailer_type string 'Internet Site'"
+  #- sudo apt-get install -y mailutils
+  # - sudo apt-get install -y ssmtp
+  #- sudo echo -e "FromLineOverride=YES \nAuthUser=$email \nAuthPass=$password \nmailhub=smtp.timeweb.ru:25 \nUseSTARTTLS=YES" >> /etc/ssmtp/ssmtp.conf
+  #- sudo sleep 3
+  #- sudo cat /etc/ssmtp/ssmtp.conf
+  #- sudo echo "This is a test" | mail --debug-level 10 -s "Tesasdasdsad" -aFrom:$email $email2
+    - sudo apt-get install openssl
+    - sudo apt-get install ssmtp
+    - sudo apt-get install sasl2-bin
+    - sudo apt-get install heirloom-mailx
+    - sudo sleep 3
+    - sudo echo "This is the message body and contains the message" | mailx -v -r "artem@sokovets.ru" -s "This is the subject123" -S smtp="smtp.timeweb.ru:25" -S smtp-use-starttls -S smtp-auth=login -S smtp-auth-user="artem@sokovets.ru" -S smtp-auth-password="$password" -S ssl-verify=ignore relix@mail.ru
+
 
 before_script:
   - google-chrome --version #Show Chrome Versions
